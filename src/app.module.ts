@@ -16,7 +16,7 @@ import { ProductsModule } from './products/products.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      isGlobal: true,
+      isGlobal: false,
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
