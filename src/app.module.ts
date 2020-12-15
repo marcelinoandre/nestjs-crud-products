@@ -12,6 +12,8 @@ import {
   DB_SYNCRONIZE,
 } from './config/constants';
 import { ProductsModule } from './products/products.module';
+import { UsersModule } from './users/users.module';
+import { RulesModule } from './rules/rules.module';
 
 @Module({
   imports: [
@@ -33,6 +35,8 @@ import { ProductsModule } from './products/products.module';
       inject: [ConfigService],
     }),
     ProductsModule,
+    UsersModule,
+    RulesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,0 +1,5 @@
+[ ] Criar frontend com ReactJS
+[ ] Implementar Tests com Jest
+[ ]  Add file configDB in folder config
+
+Autenticación JWT con Angular + NestJS + MySQL. Capítulo 1

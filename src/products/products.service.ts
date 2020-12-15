@@ -19,8 +19,6 @@ export class ProductsService {
   async getProducts(): Promise<ProductEntity[]> {
     const products = await this.productRepository.find();
 
-    if (!products.length) throw new NotFoundException();
-
     return products;
   }
 
