@@ -12,9 +12,8 @@ import {
   DB_SYNCRONIZE,
 } from './config/constants';
 import { ProductsModule } from './products/products.module';
+import { RolesModule } from './roles/roles.module';
 import { UsersModule } from './users/users.module';
-import { RulesModule } from './rules/rules.module';
-
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -35,10 +34,10 @@ import { RulesModule } from './rules/rules.module';
       inject: [ConfigService],
     }),
     ProductsModule,
+    RolesModule,
     UsersModule,
-    RulesModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService ],
 })
 export class AppModule {}
