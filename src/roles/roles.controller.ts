@@ -1,4 +1,11 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { CreateRolesDto } from './dto/roles.dto';
 import { RolesService } from './roles.service';
 
@@ -11,6 +18,7 @@ export class RolesController {
     return this.rolesService.getAll();
   }
 
+  @UsePipes(new ValidationPipe({ whitelist: true }))
   @Post()
   create(@Body() createRolesDto: CreateRolesDto) {
     return this.rolesService.create(createRolesDto);
