@@ -1,4 +1,7 @@
+import { hash } from 'bcryptjs';
 import {
+  BeforeInsert,
+  BeforeUpdate,
   Column,
   Entity,
   JoinTable,
@@ -33,4 +36,10 @@ export class UserEntity {
     inverseJoinColumn: { name: 'roles_id' },
   })
   roles: RolesEntity[];
+
+  @BeforeInsert()
+  @BeforeUpdate()
+  async hashPassword() {
+    this.password = await hash(this.password, 10);
+  }
 }
