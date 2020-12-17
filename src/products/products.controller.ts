@@ -7,7 +7,12 @@ import {
   ParseUUIDPipe,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
+import { RolesDecorator } from 'src/docorators/roles.decorator';
+import { JwtAuthGuard } from 'src/guards/jwt.guard';
+import { RolesGuard } from 'src/guards/roles.guard';
+import { RolesEnum } from 'src/roles/roles.enum';
 import { ProductDto } from './dto/product.dto';
 import { ProductsService } from './products.service';
 
@@ -17,6 +22,8 @@ export class ProductsController {
     private readonly productService: ProductsService, // private readonly configService: ConfigService,
   ) {}
 
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @RolesDecorator(RolesEnum.ADMIN, RolesEnum.USER)
   @Get()
   async getProducts() {
     return await this.productService.getProducts();
@@ -28,8 +35,9 @@ export class ProductsController {
   }
   @Get(':id')
   async getProductsById(
-     @Param('id', new ParseUUIDPipe()
-     ) id: string): Promise<ProductDto> {
+    @Param('id', new ParseUUIDPipe())
+    id: string,
+  ): Promise<ProductDto> {
     return await this.productService.getProductsById(id);
   }
 

@@ -14,6 +14,7 @@ import { UserEntity } from 'src/users/user.entity';
 import { AuthRepository } from './auth.repository';
 import { LoginDto } from './dto/login.dto';
 import { SignInDto } from './dto/signin.dto';
+import { TokenDto } from './dto/token.dto';
 import { PayloadInterface } from './payload.interface';
 
 @Injectable()
@@ -23,7 +24,7 @@ export class AuthService {
     private readonly rolesRepository: RolesRepository,
     @InjectRepository(UserEntity)
     private readonly authRepository: AuthRepository,
-    private readonly jwtService : JwtService
+    private readonly jwtService: JwtService,
   ) {}
 
   async getAll(): Promise<UserEntity[]> {
@@ -65,7 +66,19 @@ export class AuthService {
       roles: user.roles.map(rol => rol.name as RolesEnum),
     };
 
-    const token =  this.jwtService.sign(payload)
-    return {token};
+    const token = this.jwtService.sign(payload);
+    return { token };
+  }
+
+  async refreshToken(dto: TokenDto) {
+    const user = await this.jwtService.decode(dto.token);
+    const payload: PayloadInterface = {
+      id: user['id'],
+      name: user['name'],
+      email: user['email'],
+      roles: user['roles'],
+    };
+    const token = this.jwtService.sign(payload);
+    return { token };
   }
 }
