@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ConflictException,
   Injectable,
   InternalServerErrorException,
@@ -19,8 +20,6 @@ export class ProductsService {
   async getProducts(): Promise<ProductEntity[]> {
     const products = await this.productRepository.find();
 
-    if (!products.length) throw new NotFoundException();
-
     return products;
   }
 
@@ -32,6 +31,7 @@ export class ProductsService {
 
   async getProductsById(id: string): Promise<ProductEntity> {
     const product = await this.productRepository.findOne(id);
+    if (!product) throw new NotFoundException();
     return product;
   }
 

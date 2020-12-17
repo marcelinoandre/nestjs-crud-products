@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   Param,
+  ParseUUIDPipe,
   Post,
   Put,
 } from '@nestjs/common';
@@ -21,9 +22,15 @@ export class ProductsController {
     return await this.productService.getProducts();
   }
 
-  @Get(':name')
+  @Get('/name/:name')
   async getProductsByName(@Param('name') name: string): Promise<ProductDto> {
     return await this.productService.getProductsByName(name);
+  }
+  @Get(':id')
+  async getProductsById(
+     @Param('id', new ParseUUIDPipe()
+     ) id: string): Promise<ProductDto> {
+    return await this.productService.getProductsById(id);
   }
 
   @Post()
