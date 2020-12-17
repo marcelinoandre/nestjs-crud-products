@@ -22,8 +22,8 @@ export class ProductsController {
     private readonly productService: ProductsService, // private readonly configService: ConfigService,
   ) {}
 
-   @RolesDecorator(RolesEnum.ADMIN, RolesEnum.USER)
   @UseGuards(JwtAuthGuard, RolesGuard)
+  @RolesDecorator(RolesEnum.ADMIN, RolesEnum.USER)
   @Get()
   async getProducts() {
     return await this.productService.getProducts();

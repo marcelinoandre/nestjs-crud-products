@@ -25,7 +25,7 @@ export class UsersService {
   }
 
   async createUser(createUserDto: CreateUserDto): Promise<CreateUserDto> {
-    const { name, email } = createUserDto;
+    const {  email } = createUserDto;
     const exists = await this.userRepository.findOne({
       where: [{ email }],
     });
@@ -37,13 +37,12 @@ export class UsersService {
       where: { name: RolesEnum.USER },
     });
 
-    if (!rolesAdmin || !rolesUser) throw new InternalServerErrorException();
+    if (!rolesAdmin || !rolesUser) 
+      throw new InternalServerErrorException();
 
     const userAdmin = this.userRepository.create(createUserDto);
     userAdmin.roles = [rolesAdmin, rolesUser];
-    return await this.userRepository.save(userAdmin);
-
-    // const user = this.userRepository.create(createUserDto);
-    // return await this.userRepository.save(user);
+    
+    return await this.userRepository.save(userAdmin);    
   }
 }

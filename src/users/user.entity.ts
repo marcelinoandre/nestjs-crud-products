@@ -26,7 +26,7 @@ export class UserEntity {
   password: string;
 
   @ManyToMany(
-    type => RolesEntity,
+    () => RolesEntity,
     roles => roles.users,
     { eager: true },
   )
